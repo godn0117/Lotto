@@ -23,5 +23,18 @@ namespace Lotto
             flp.MdiParent = this;
             flp.Show();
         }
+
+        //폼 한개만 띄우기
+        private Chart frmChart;
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            if (!(frmChart == null || !frmChart.Visible))
+            {
+                frmChart.Focus();
+                return;
+            }
+            frmChart = new Chart();
+            frmChart.Show();
+        }
     }
 }
