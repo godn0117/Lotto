@@ -21,7 +21,7 @@ namespace Lotto
         List<int> unInsertedNumList = new List<int>();
         HtmlWeb web = new HtmlWeb(); // 
         HtmlAgilityPack.HtmlDocument htmlDoc;
-        private int newTurnNum;
+        static public int newTurnNum;
 
         public Form1()
         {
@@ -178,7 +178,7 @@ namespace Lotto
             lottoList.Add(lotto);
         }
 
-        private void DisplayList()
+        private void DisplayList() // LottoDB에서 전체 내용을 가져와 List에 저장후 DataGridView에 보여준다
         {
             lottoList.Clear();
             LottoGridView.Columns.Clear();
@@ -214,35 +214,44 @@ namespace Lotto
             LottoGridView.Columns[5].HeaderText = "5구";
             LottoGridView.Columns[6].HeaderText = "6구";
             LottoGridView.Columns[7].HeaderText = "보너스구";
+
+            LottoGridView.Sort(LottoGridView.Columns[1], ListSortDirection.Ascending);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if (cbxTurnNum.SelectedItem != null)
+            try
             {
-                LottoGridView.DataSource = null;
-                LottoGridView.Columns.Clear();
-                foreach (Lotto item in lottoList)
+                if (Int32.Parse(cbxTurnNum.Text) <= newTurnNum && cbxTurnNum.Text != null)
                 {
-                    if (cbxTurnNum.SelectedItem.ToString().Equals(item.TurnNumber.ToString()))
+                    LottoGridView.DataSource = null;
+                    LottoGridView.Columns.Clear();
+                    foreach (Lotto item in lottoList)
                     {
-                        string[] s = { item.TurnNumber.ToString(), item.Num1.ToString(), item.Num2.ToString(), item.Num3.ToString(), item.Num4.ToString(), item.Num5.ToString(), item.Num6.ToString(), item.BonusNum.ToString() };
-                        LottoGridView.Columns.Add("turnnumber", "회차");
-                        LottoGridView.Columns.Add("num1", "1구");
-                        LottoGridView.Columns.Add("num2", "2구");
-                        LottoGridView.Columns.Add("num3", "3구");
-                        LottoGridView.Columns.Add("num4", "4구");
-                        LottoGridView.Columns.Add("num5", "5구");
-                        LottoGridView.Columns.Add("num6", "6구");
-                        LottoGridView.Columns.Add("bonusnum", "보너스구");
-                        LottoGridView.Rows.Add(s);
+                        if (cbxTurnNum.Text.ToString().Equals(item.TurnNumber.ToString()))
+                        {
+                            string[] s = { item.TurnNumber.ToString(), item.Num1.ToString(), item.Num2.ToString(), item.Num3.ToString(), item.Num4.ToString(), item.Num5.ToString(), item.Num6.ToString(), item.BonusNum.ToString() };
+                            LottoGridView.Columns.Add("turnnumber", "회차");
+                            LottoGridView.Columns.Add("num1", "1구");
+                            LottoGridView.Columns.Add("num2", "2구");
+                            LottoGridView.Columns.Add("num3", "3구");
+                            LottoGridView.Columns.Add("num4", "4구");
+                            LottoGridView.Columns.Add("num5", "5구");
+                            LottoGridView.Columns.Add("num6", "6구");
+                            LottoGridView.Columns.Add("bonusnum", "보너스구");
+                            LottoGridView.Rows.Add(s);
+                        }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("회차를 입력해 주세요");
+                }
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("회차를 입력해 주세요");
-            }
+                MessageBox.Show("숫자를 입력해 주세요");
+            }            
 
             //if (cbxTurnNum.SelectedIndex != -1) // 콤보박스가 선택되었을경우에만 실행
             //{
