@@ -14,6 +14,7 @@ C:\Users\GD1\Desktop\Lotto\Lotto\Lotto\bin\Debug\HtmlAgilityPack.xml
 C:\Users\GD1\Desktop\Lotto\Lotto\Lotto\obj\Debug\Lotto.csproj.CopyComplete
 C:\Users\GD1\Desktop\Lotto\Lotto\Lotto\obj\Debug\Lotto.FrmLotteryPick.resources
 C:\Users\GD1\Desktop\Lotto\Lotto\Lotto\obj\Debug\Lotto.FrmAnalysis.resources
+<<<<<<< HEAD
 C:\Users\GD25\Desktop\LottoProject\Lotto\bin\Debug\Lotto.exe.config
 C:\Users\GD25\Desktop\LottoProject\Lotto\bin\Debug\Lotto.exe
 C:\Users\GD25\Desktop\LottoProject\Lotto\bin\Debug\Lotto.pdb
@@ -33,3 +34,21 @@ C:\Users\GD25\Desktop\LottoProject\Lotto\obj\Debug\Lotto.exe
 C:\Users\GD25\Desktop\LottoProject\Lotto\obj\Debug\Lotto.pdb
 C:\Users\GD25\Desktop\LottoProject\Lotto\obj\Debug\Lotto.FrmColor.resources
 C:\Users\GD25\Desktop\LottoProject\Lotto\obj\Debug\Lotto.FrmTest.resources
+=======
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\bin\Debug\Lotto.exe.config
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\bin\Debug\Lotto.exe
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\bin\Debug\Lotto.pdb
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\bin\Debug\HtmlAgilityPack.dll
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\bin\Debug\HtmlAgilityPack.xml
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.csprojAssemblyReference.cache
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.FrmAnalysis.resources
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.Form1.resources
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.FrmLotteryPick.resources
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.Properties.Resources.resources
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.csproj.GenerateResource.cache
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.csproj.CoreCompileInputs.cache
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.csproj.CopyComplete
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.exe
+C:\Users\GD1\Desktop\GitLotto\Lotto\Lotto\obj\Debug\Lotto.pdb
+>>>>>>> 5c9d21de65f2b8776ddd6b0a8edae5f431931572
