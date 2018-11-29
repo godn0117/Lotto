@@ -215,7 +215,8 @@ namespace Lotto
             LottoGridView.Columns[6].HeaderText = "6구";
             LottoGridView.Columns[7].HeaderText = "보너스구";
 
-            LottoGridView.Sort(LottoGridView.Columns[1], ListSortDirection.Ascending);
+            LottoGridView.Sort(LottoGridView.Columns[0], ListSortDirection.Ascending);
+            //LottoGridView.Columns["TurnNumber"].SortMode = DataGridViewColumnSortMode.Automatic;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -251,8 +252,10 @@ namespace Lotto
             catch (Exception)
             {
                 MessageBox.Show("숫자를 입력해 주세요");
-            }            
-
+            }
+            
+            //LottoGridView.Rows[0].Cells[0].Style.BackColor = Color.Yellow;
+            
             //if (cbxTurnNum.SelectedIndex != -1) // 콤보박스가 선택되었을경우에만 실행
             //{
             //    // 선택된 row의 cell collection을 가져와 선택을 해준다.
