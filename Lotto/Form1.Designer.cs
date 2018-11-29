@@ -70,6 +70,7 @@
             this.btnReNew.TabIndex = 3;
             this.btnReNew.Text = "갱신";
             this.btnReNew.UseVisualStyleBackColor = true;
+            this.btnReNew.Click += new System.EventHandler(this.btnReNew_Click);
             // 
             // btnAnalyst
             // 

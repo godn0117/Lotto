@@ -96,5 +96,10 @@ namespace Lotto
             FrmAnalysis fa = new FrmAnalysis();
             fa.ShowDialog();
         }
+
+        private void btnReNew_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
