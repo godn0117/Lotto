@@ -18,6 +18,7 @@ namespace Lotto
     public partial class Form1 : Form
     {
         List<Lotto> lottoList = new List<Lotto>();
+        List<int> unInsertedNumList = new List<int>();
         HtmlWeb web = new HtmlWeb(); // 
         HtmlAgilityPack.HtmlDocument htmlDoc;
         private int newTurnNum;
@@ -29,6 +30,15 @@ namespace Lotto
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            web.OverrideEncoding = Encoding.UTF8;
+            htmlDoc = web.Load(new Uri("http://nlotto.co.kr/gameResult.do?method=byWin")); //          
+            newTurnNum = Int32.Parse(htmlDoc.DocumentNode.SelectNodes("//body//option")[0].InnerText);   // 제일 최신 회차 번호 변수에 저장           
+
+            for (int i = 1; i <= newTurnNum; i++)
+            {
+                cbxTurnNum.Items.Add(i);
+            }
+
             DisplayList();
         }
 
@@ -71,12 +81,12 @@ namespace Lotto
                 }
                 con.Close();
             }
-        }        
+        }
 
         private void UpdateLotto() // 로또 최근까지 업데이트뒤의 회차 ~ 최신회차를 갱신해서 list에 넣어준다.
         {
             lottoList.Clear(); // 리스트 클리어
-
+            unInsertedNumList.Clear();
             using (SqlConnection con = DBConnection.Connecting())
             {
                 con.Open();
@@ -92,31 +102,38 @@ namespace Lotto
                 htmlDoc = web.Load(new Uri("http://nlotto.co.kr/gameResult.do?method=byWin")); //          
                 newTurnNum = Int32.Parse(htmlDoc.DocumentNode.SelectNodes("//body//option")[0].InnerText);   // 제일 최신 회차 번호 변수에 저장           
 
-                int lastTurnNumber = 1;
-                UpdateProgressBar.Maximum = 0;
-                if (sdr == null)
+                int nowNum = 0;
+                for (int i = 1; i <= newTurnNum; i++)
                 {
-                    UpdateProgressBar.Maximum = newTurnNum - 0;
-                }                
+                    unInsertedNumList.Add(i);
+                }
 
                 while (sdr.Read())
                 {
-                    lastTurnNumber = Int32.Parse(sdr["turnnumber"].ToString()) + 1;
-                }
-                con.Close();
-                
-                UpdateProgressBar.Value = 0;
+                    nowNum = Int32.Parse(sdr["turnnumber"].ToString());
 
-                for (int i = lastTurnNumber; i <= newTurnNum; i++)
+                    unInsertedNumList.Remove(nowNum);
+                }                
+                
+                con.Close();
+
+                
+                if (unInsertedNumList.Count == 0)
                 {
-                    if (UpdateProgressBar.Value != UpdateProgressBar.Maximum)
-                    {
-                        UpdateProgressBar.Value = (int)Math.Truncate((double)newTurnNum-i/UpdateProgressBar.Maximum*100);
-                    }
-                    
-                    htmlDoc = web.Load(new Uri("http://nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + i));
-                    Parsing(htmlDoc);
+                    UpdateProgressBar.Maximum = 1;
+                    UpdateProgressBar.Value = unInsertedNumList.Count + 1;
                 }
+                else
+                {
+                    UpdateProgressBar.Maximum = unInsertedNumList.Count;
+                }
+
+                foreach (var item in unInsertedNumList)
+                {
+                    UpdateProgressBar.Value += 1;
+                    htmlDoc = web.Load(new Uri("http://nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + item.ToString()));
+                    Parsing(htmlDoc);
+                }                
             }
         }
 
@@ -181,11 +198,56 @@ namespace Lotto
                 {
                     Lotto lotto = new Lotto(Int32.Parse(sdr["turnnumber"].ToString()), Int32.Parse(sdr["num1"].ToString()), Int32.Parse(sdr["num2"].ToString()), Int32.Parse(sdr["num3"].ToString()), Int32.Parse(sdr["num4"].ToString()), Int32.Parse(sdr["num5"].ToString()), Int32.Parse(sdr["num6"].ToString()), Int32.Parse(sdr["bonusnum"].ToString()));
 
-                    lottoList.Add(lotto);
-                }
-            }
+                    lottoList.Add(lotto); // 
 
-            LottoGridView.DataSource = lottoList;
+                    lblCurrentLottoNum.Text = lotto.TurnNumber + "회차 : " + lotto.Num1 + " " + lotto.Num2 + " " + lotto.Num3 + " " + lotto.Num4 + " " + lotto.Num5 + " " + lotto.Num6 + " 보너스 번호 : " + lotto.BonusNum + "";
+                }                
+            }            
+            LottoGridView.DataSource = lottoList;            
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            //if (cbxTurnNum.SelectedItem != null)
+            //{
+            //    LottoGridView.DataSource = null;
+            //    foreach (Lotto item in lottoList)
+            //    {
+            //        if (cbxTurnNum.SelectedItem.ToString().Equals(item.TurnNumber.ToString()))
+            //        {
+            //            //LottoGridView.DataSource = item;
+            //            //var t = LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) + 1].Cells;
+            //            var t = LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) + 1].Cells;
+            //            foreach (DataGridViewCell tt in t)
+            //            {
+            //                tt.Style.BackColor = Color.Yellow;
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("회차를 입력해 주세요");
+            //}
+
+            if (cbxTurnNum.SelectedIndex != -1) // 콤보박스가 선택되었을경우에만 실행
+            {     
+                // 선택된 row의 cell collection을 가져와 선택을 해준다.
+                foreach (DataGridViewCell tt in LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) - 1].Cells)
+                { 
+                    tt.Style.BackColor = Color.Yellow; // 선택된 row의 cell들 전체를 칼라로 칠해준다.
+                }              
+
+                // 스크롤바의 위치를 선택된 row의 값으로 이동해준다.
+                LottoGridView.FirstDisplayedScrollingRowIndex = Int32.Parse(cbxTurnNum.SelectedItem.ToString()) - 1;
+            }
+        }
+
+        private void btnSelectAll_Click(object sender, EventArgs e)
+        {
+            DisplayList();
+        }
+
+        
     }
 }

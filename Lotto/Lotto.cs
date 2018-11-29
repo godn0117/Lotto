@@ -34,6 +34,8 @@ namespace Lotto
             this.bonusNum = bonusNum;
         }
 
+       
+
         #region Property
         public int TurnNumber
         {
