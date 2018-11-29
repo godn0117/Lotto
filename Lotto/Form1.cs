@@ -113,11 +113,11 @@ namespace Lotto
                     nowNum = Int32.Parse(sdr["turnnumber"].ToString());
 
                     unInsertedNumList.Remove(nowNum);
-                }                
-                
+                }
+
                 con.Close();
 
-                
+
                 if (unInsertedNumList.Count == 0)
                 {
                     UpdateProgressBar.Maximum = 1;
@@ -133,7 +133,7 @@ namespace Lotto
                     UpdateProgressBar.Value += 1;
                     htmlDoc = web.Load(new Uri("http://nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + item.ToString()));
                     Parsing(htmlDoc);
-                }                
+                }
             }
         }
 
@@ -181,6 +181,7 @@ namespace Lotto
         private void DisplayList()
         {
             lottoList.Clear();
+            LottoGridView.Columns.Clear();
             LottoGridView.DataSource = null;
 
             using (SqlConnection con = DBConnection.Connecting())
@@ -201,46 +202,59 @@ namespace Lotto
                     lottoList.Add(lotto); // 
 
                     lblCurrentLottoNum.Text = lotto.TurnNumber + "회차 : " + lotto.Num1 + " " + lotto.Num2 + " " + lotto.Num3 + " " + lotto.Num4 + " " + lotto.Num5 + " " + lotto.Num6 + " 보너스 번호 : " + lotto.BonusNum + "";
-                }                
-            }            
-            LottoGridView.DataSource = lottoList;            
+                }
+            }
+            LottoGridView.DataSource = lottoList;
+
+            LottoGridView.Columns[0].HeaderText = "회차";
+            LottoGridView.Columns[1].HeaderText = "1구";
+            LottoGridView.Columns[2].HeaderText = "2구";
+            LottoGridView.Columns[3].HeaderText = "3구";
+            LottoGridView.Columns[4].HeaderText = "4구";
+            LottoGridView.Columns[5].HeaderText = "5구";
+            LottoGridView.Columns[6].HeaderText = "6구";
+            LottoGridView.Columns[7].HeaderText = "보너스구";
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //if (cbxTurnNum.SelectedItem != null)
-            //{
-            //    LottoGridView.DataSource = null;
-            //    foreach (Lotto item in lottoList)
-            //    {
-            //        if (cbxTurnNum.SelectedItem.ToString().Equals(item.TurnNumber.ToString()))
-            //        {
-            //            //LottoGridView.DataSource = item;
-            //            //var t = LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) + 1].Cells;
-            //            var t = LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) + 1].Cells;
-            //            foreach (DataGridViewCell tt in t)
-            //            {
-            //                tt.Style.BackColor = Color.Yellow;
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("회차를 입력해 주세요");
-            //}
-
-            if (cbxTurnNum.SelectedIndex != -1) // 콤보박스가 선택되었을경우에만 실행
-            {     
-                // 선택된 row의 cell collection을 가져와 선택을 해준다.
-                foreach (DataGridViewCell tt in LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) - 1].Cells)
-                { 
-                    tt.Style.BackColor = Color.Yellow; // 선택된 row의 cell들 전체를 칼라로 칠해준다.
-                }              
-
-                // 스크롤바의 위치를 선택된 row의 값으로 이동해준다.
-                LottoGridView.FirstDisplayedScrollingRowIndex = Int32.Parse(cbxTurnNum.SelectedItem.ToString()) - 1;
+            if (cbxTurnNum.SelectedItem != null)
+            {
+                LottoGridView.DataSource = null;
+                LottoGridView.Columns.Clear();
+                foreach (Lotto item in lottoList)
+                {
+                    if (cbxTurnNum.SelectedItem.ToString().Equals(item.TurnNumber.ToString()))
+                    {
+                        string[] s = { item.TurnNumber.ToString(), item.Num1.ToString(), item.Num2.ToString(), item.Num3.ToString(), item.Num4.ToString(), item.Num5.ToString(), item.Num6.ToString(), item.BonusNum.ToString() };
+                        LottoGridView.Columns.Add("turnnumber", "회차");
+                        LottoGridView.Columns.Add("num1", "1구");
+                        LottoGridView.Columns.Add("num2", "2구");
+                        LottoGridView.Columns.Add("num3", "3구");
+                        LottoGridView.Columns.Add("num4", "4구");
+                        LottoGridView.Columns.Add("num5", "5구");
+                        LottoGridView.Columns.Add("num6", "6구");
+                        LottoGridView.Columns.Add("bonusnum", "보너스구");
+                        LottoGridView.Rows.Add(s);
+                    }
+                }
             }
+            else
+            {
+                MessageBox.Show("회차를 입력해 주세요");
+            }
+
+            //if (cbxTurnNum.SelectedIndex != -1) // 콤보박스가 선택되었을경우에만 실행
+            //{
+            //    // 선택된 row의 cell collection을 가져와 선택을 해준다.
+            //    foreach (DataGridViewCell tt in LottoGridView.Rows[Int32.Parse(cbxTurnNum.SelectedItem.ToString()) - 1].Cells)
+            //    {
+            //        tt.Style.BackColor = Color.Yellow; // 선택된 row의 cell들 전체를 칼라로 칠해준다.
+            //    }
+
+            //    // 스크롤바의 위치를 선택된 row의 값으로 이동해준다.
+            //    LottoGridView.FirstDisplayedScrollingRowIndex = Int32.Parse(cbxTurnNum.SelectedItem.ToString()) - 1;
+            //}
         }
 
         private void btnSelectAll_Click(object sender, EventArgs e)
@@ -248,6 +262,6 @@ namespace Lotto
             DisplayList();
         }
 
-        
+
     }
 }
