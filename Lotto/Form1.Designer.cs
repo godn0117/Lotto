@@ -33,13 +33,15 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnReNew = new System.Windows.Forms.Button();
             this.btnAnalyst = new System.Windows.Forms.Button();
-            this.txtHtml = new System.Windows.Forms.TextBox();
+            this.LottoGridView = new System.Windows.Forms.DataGridView();
+            this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
+            ((System.ComponentModel.ISupportInitialize)(this.LottoGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(381, 102);
+            this.label1.Location = new System.Drawing.Point(313, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 12);
             this.label1.TabIndex = 0;
@@ -48,14 +50,14 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(568, 93);
+            this.comboBox1.Location = new System.Drawing.Point(690, 113);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 1;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(721, 89);
+            this.btnSearch.Location = new System.Drawing.Point(817, 113);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 2;
@@ -70,6 +72,7 @@
             this.btnReNew.TabIndex = 3;
             this.btnReNew.Text = "갱신";
             this.btnReNew.UseVisualStyleBackColor = true;
+            this.btnReNew.Click += new System.EventHandler(this.btnReNew_Click);
             // 
             // btnAnalyst
             // 
@@ -81,20 +84,29 @@
             this.btnAnalyst.UseVisualStyleBackColor = true;
             this.btnAnalyst.Click += new System.EventHandler(this.btnAnalyst_Click);
             // 
-            // txtHtml
+            // LottoGridView
             // 
-            this.txtHtml.Location = new System.Drawing.Point(82, 221);
-            this.txtHtml.Multiline = true;
-            this.txtHtml.Name = "txtHtml";
-            this.txtHtml.Size = new System.Drawing.Size(714, 248);
-            this.txtHtml.TabIndex = 5;
+            this.LottoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.LottoGridView.Location = new System.Drawing.Point(13, 142);
+            this.LottoGridView.Name = "LottoGridView";
+            this.LottoGridView.RowTemplate.Height = 23;
+            this.LottoGridView.Size = new System.Drawing.Size(879, 405);
+            this.LottoGridView.TabIndex = 5;
+            // 
+            // UpdateProgressBar
+            // 
+            this.UpdateProgressBar.Location = new System.Drawing.Point(189, 565);
+            this.UpdateProgressBar.Name = "UpdateProgressBar";
+            this.UpdateProgressBar.Size = new System.Drawing.Size(703, 23);
+            this.UpdateProgressBar.TabIndex = 6;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 618);
-            this.Controls.Add(this.txtHtml);
+            this.Controls.Add(this.UpdateProgressBar);
+            this.Controls.Add(this.LottoGridView);
             this.Controls.Add(this.btnAnalyst);
             this.Controls.Add(this.btnReNew);
             this.Controls.Add(this.btnSearch);
@@ -103,6 +115,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.LottoGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,7 +128,8 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnReNew;
         private System.Windows.Forms.Button btnAnalyst;
-        private System.Windows.Forms.TextBox txtHtml;
+        private System.Windows.Forms.DataGridView LottoGridView;
+        private System.Windows.Forms.ProgressBar UpdateProgressBar;
     }
 }
 
