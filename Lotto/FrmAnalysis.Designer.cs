@@ -79,6 +79,7 @@
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(71, 22);
             this.toolStripButton3.Text = "차트로보기";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripButton4
             // 
@@ -98,14 +99,14 @@
             this.toolStripButton5.Size = new System.Drawing.Size(83, 22);
             this.toolStripButton5.Text = "나의선호번호";
             // 
-            // analysis
+            // FrmAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.toolStrip1);
             this.IsMdiContainer = true;
-            this.Name = "analysis";
+            this.Name = "FrmAnalysis";
             this.Text = "analysis";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
